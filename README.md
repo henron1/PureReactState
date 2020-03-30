@@ -14,3 +14,45 @@ Delving into Class Based State, Hooks State, Reducers, Context, Data Fetching an
 
 1. Model State: This is the most likely the data in your application such as items in a list of inventory.
 2. Ephemeral State: This could include things like values of input fields or things that are wiped away once you press "enter". It could also be the order in which a given list is sorted.
+
+<code>
+  Class Counter extends Component {
+  // pass props up to component class since we're sublcassing
+    constructor(props) {
+      super(props);
+      this.state = {
+        count: 0,
+      };
+
+      this.increment = this.increment.bind(this);
+      this.decrement = this.decrement.bind(this);
+      this.reset = this.reset.bind(this);
+    }
+
+    increment() {
+      this.setState({ count: this.state.count + 1 });
+    }
+
+    decrement() {
+      this.setState({ count: this.state.count - 1 });
+    }
+
+    reset() {
+      this.setState({ count: 0 });
+    }
+
+    render() {
+      const { count } = this.state;
+      return (
+        <div className="Counter">
+          <p className="count">{count}</p>
+          <section className="controls">
+            <button onClick={this.increment}>Increment</button>
+            <button onClick={this.decrement}>Decrement</button>
+            <button onClick={this.reset}>Reset</button>
+          </section>
+        </div>
+      );
+     }
+   }
+  </code>
