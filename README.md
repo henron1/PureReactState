@@ -10,14 +10,14 @@ Delving into Class Based State, Hooks State, Reducers, Context, Data Fetching an
 - Communication: Are we in the process of fetching the nouns from the server?
 - Location: Where are we in the application? Which nouns are we looking at?
 
-# High Level Ways of Thinking of State:
+## High Level Ways of Thinking of State:
 
 1. Model State: This is the most likely the data in your application such as items in a list of inventory.
 2. Ephemeral State: This could include things like values of input fields or things that are wiped away once you press "enter". It could also be the order in which a given list is sorted.
 
+## setState: Understanding the basics
 ```javascript
 class Counter extends Component {
-  // pass props up to component class since we're sublcassing
   constructor(props) {
     super(props);
     this.state = {
@@ -56,3 +56,64 @@ class Counter extends Component {
   }
 }
 ```
+Here we have a react counter found in simple-counter that is incrementing, decrementing and reseting our count in state.
+I'm assuming you have a basic knowledge of Javascript and React so I don't have to break the above snippet down too much)
+
+### What are we doing?
+1. Initialize a class component and passing props to the component class
+2. Setting an initial state of 0
+3. Binding *this* to our three methods (otherwise we would get the classic "Cannot read property setState of undefined")
+4. Building out our methods and updating state
+5. Rendering our counter
+
+Now what if we were to write
+```javascript
+increment() {
+    this.setState({ count: this.state.count + 1 });
+    this.setState({ count: this.state.count + 1 });
+    this.setState({ count: this.state.count + 1 });
+    console.log(this.state.count);
+  }
+```
+What will our count be?
+Answer: 0
+
+You were probably thinking 3, but this.setState() is asynchronous. 
+It acts like this becaues we don't want to stop the world and redender the DOM every time setState is called.
+Instead, the function runs to completion and then React can figure out what changes need to be made to the DOM.
+
+Now what if we write the same code? (minus the log)
+```javascript
+increment() {
+    this.setState({ count: this.state.count + 1 });
+    this.setState({ count: this.state.count + 1 });
+    this.setState({ count: this.state.count + 1 });
+    console.log(this.state.count);
+  }
+```
+What will the count on the screen be now after the program has run and the DOM has updated?
+Answer: 1
+
+The reason for this is that now we're queueing up state changes. We've told React "0 + 1" *three times* and tries to collect all of the things in the object. This will be different when we get to hooks because there are no objects per se.  
+
+What's happening above when we call this.setState() we give it an object, that has the key of count and the value of what the new count should be and it merges all of those objects together. Here's an example below:
+```javascript
+Object.assign(
+  {},
+  firstCallToSetState,
+  secondCallToSetState,
+  thirdCallToSetSTate,
+);
+```
+
+IF there are DUPLICATE keys, shown in the example below, the last key wins and the count would be 3.
+```javascript
+increment() {
+    this.setState({ count: this.state.count + 1 });
+    this.setState({ count: this.state.count + 1 });
+    this.setState({ count: this.state.count + 3 });
+  }
+```
+
+
+MAIN TAKEAWAY -> Avoid unnesecary rerenders. 
