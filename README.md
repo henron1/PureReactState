@@ -17,30 +17,28 @@ Delving into Class Based State, Hooks State, Reducers, Context, Data Fetching an
 
 <code>
   Class Counter extends Component {
-  // pass props up to component class since we're sublcassing
     constructor(props) {
       super(props);
       this.state = {
         count: 0,
       };
-
       this.increment = this.increment.bind(this);
       this.decrement = this.decrement.bind(this);
       this.reset = this.reset.bind(this);
     }
-
+  
     increment() {
       this.setState({ count: this.state.count + 1 });
     }
-
+    
     decrement() {
       this.setState({ count: this.state.count - 1 });
     }
-
+    
     reset() {
       this.setState({ count: 0 });
     }
-
+    
     render() {
       const { count } = this.state;
       return (
