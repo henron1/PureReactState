@@ -117,3 +117,20 @@ increment() {
 
 
 MAIN TAKEAWAY -> Avoid unnesecary rerenders. 
+
+We're not quite done with setState() just yet! We've passed in objects, and now we're going to pass in a function.
+Let's take the example above and instead of passing in the same object 3 times, let's call the same anonymous funciton 3 times.
+```javascript
+increment() {
+    this.setState((state) => { count: this.state.count + 1 });
+    this.setState((state) => { count: this.state.count + 1 });
+    this.setState((state) => { count: this.state.count + 1 });
+  }
+```
+What will the counter be incremented to after using this syntax?
+Answer: 3
+
+The reason why is because in Javascript we can merge objects, but no functions (before you yell at me we're not getting into composition). 
+
+
+
