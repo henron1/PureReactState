@@ -1,4 +1,4 @@
-# PureReactState
+# PureReactState (In Development)
 
 Delving into Class Based State, Hooks State, Reducers, Context, Data Fetching and Thunks.
 
@@ -130,7 +130,7 @@ increment() {
 What will the counter be incremented to after using this syntax?
 Answer: 3
 
-The reason why is because in Javascript we can merge objects, but no functions (before you yell at me we're not getting into composition). 
+The reason why is because in Javascript we can merge objects, but not functions (before you yell at me we're not getting into composition). 
 
 
 
