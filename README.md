@@ -147,11 +147,47 @@ Why is this so useful? See the example below:
 If you wanted to test the component, you would only need to write a simple unit test rather than getting into jest or enzyme and mounting the component and passing in props etc when all we want to test is "does this funciton work".
 
 ```javascript
-const increment = (state, props) => {
+const inc = (state, props) => {
 	const { max, step } = props;
 	if (state.count >= max) return;
 	return { count: state.count + step };
 };
+
+...
+
+increment() {
+    this.setState(inc)
+}
+
 ```
 
 This is also key if your application is growing and becomes more and more complex. You can simply reuse the same function in multiple places.
+
+One last thing to cover about setState is the second argument it takes in which is the callback. This happens after the state has been updated.
+
+Let's say we want to keep track of our count in localstorage to persist our data each time we log in to our app. This isn't the best practice of dealing with localstorage, but it suits our current need.
+
+```javascript
+const getLocalStorage = () => {
+  const storage = localStorage.getItem('localCounter');
+  if (storage) return JSON.parse(storage);
+  return { count: 0 };
+};
+
+...
+
+increment = () => {
+	this.setState(
+		(state, props) => {
+			const { max, step } = props;
+			if (state.count >= max) return;
+			return { count: state.count + step };
+		},
+		() => {
+			localStorage.setItem("localCounter", JSON.stringify(this.state));
+		}
+	);
+};
+```
+
+Now we're updating localstorage within the context of setState by using the second callback parameter.
