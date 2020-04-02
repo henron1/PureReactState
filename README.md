@@ -191,3 +191,47 @@ increment = () => {
 ```
 
 Now we're updating localstorage within the context of setState by using the second callback parameter.
+
+## Top React patterns and anti-patterns to practice when managing state:
+
+1. When working with props, we have PropTypes. State does not have those safegaurds.
+2. What should be kept in state?
+   - Anything that you can't calculate from props
+   - Anything you aren't using in the render method
+3. Don't use state to derive props
+   ```javascript
+   WRONG;
+   this.state = {
+   	fullName: props.firstName + " " + props.lastName
+   };
+   WRONG;
+   ```
+   Instead you could do the following destructure:
+   ```javascript
+   render() {
+       const { firstName, lastName } = this.props;
+       const fullName = firstName + ' ' + lastName;
+       return (
+           <h1>{fullName}</h1>
+       )
+   }
+   ```
+4. Don't shove all of your logic into a render. You can break it out into another function:
+
+   ```javascript
+   const renderCustomerProfile = customer => {
+       return (
+           <CustomerProfile key ={customer.id} photo{customer.avatar} />
+       )
+   }
+
+   const CustomerList = ({customers}) => {
+       return (
+           {customers.map(renderCustomerProfile)}
+       )
+   }
+   ```
+
+5. Don't use state for things you're not going to render!! (Look to lifecycle methods)
+
+Get Ready for HOOKS!!!
