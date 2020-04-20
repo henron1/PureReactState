@@ -259,3 +259,52 @@ const Counter = ({ max, step }) => {
 
 export default Counter;
 ```
+
+NEXT let's add our first hook
+
+```javascript
+const Counter = ({ max, step }) => {
+	const increment = () => setCount(count + 1);
+	const decrement = () => setCount(count - 1);
+	const reset = () => setCount(0);
+
+	const [count, setCount] = React.useState(0);
+	return (
+		<div className="Counter">
+			<p className="count">{count}</p>
+			<section className="controls">
+				<button onClick={increment}>Increment</button>
+				<button onClick={decrement}>Decrement</button>
+				<button onClick={reset}>Reset</button>
+			</section>
+		</div>
+	);
+};
+
+export default Counter;
+```
+
+Where we define "count" we're saying that "count" is going to be the state and setCount is a function to update that state. In this case we're passing a default value of 0.
+Now all of the component logic we had before where we had our constructor, binding and pulling things out of the state object is all gone and simplified down to a much simpler and cleaner syntax.
+
+Let's run some tests.
+
+```javascript
+const increment = () => {
+	setCount(count + 1);
+	setCount(count + 1);
+	setCount(count + 1);
+};
+```
+
+Here we can see that hooks aren't too dissimliar to setState in regards to being async and quening tasks.
+
+```javascript
+const inc = (c) => c + 1;
+
+const increment = () => {
+	setCount(inc);
+};
+```
+
+Similar to this.setState, this will also take a function. There is a big difference here though that we need to catch. While setState takes in the state object as a whole and the props as a second argument, setCount just takes in one value - in our case count.
