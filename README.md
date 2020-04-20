@@ -22,7 +22,7 @@ class Counter extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			count: 0
+			count: 0,
 		};
 
 		this.increment = this.increment.bind(this);
@@ -202,7 +202,7 @@ Now we're updating localstorage within the context of setState by using the seco
    ```javascript
    WRONG;
    this.state = {
-   	fullName: props.firstName + " " + props.lastName
+   	fullName: props.firstName + " " + props.lastName,
    };
    WRONG;
    ```
@@ -235,3 +235,27 @@ Now we're updating localstorage within the context of setState by using the seco
 5. Don't use state for things you're not going to render!! (Look to lifecycle methods)
 
 Get Ready for HOOKS!!!
+
+## Hooks State
+
+# Refactoring our old code
+
+So now that we have a solid understanding of how setState works inside of a class component, let's take a look at how Hooks work. First we're going to refactor our class into a function called Counter and delete the constructor as well as all of our old logic except what was inside of our old render.
+
+```javascript
+const Counter = ({ max, step }) => {
+	const count = ([count, setCount] = React.useState(0));
+	return (
+		<div className="Counter">
+			<p className="count">{count}</p>
+			<section className="controls">
+				<button onClick={this.increment}>Increment</button>
+				<button onClick={this.decrement}>Decrement</button>
+				<button onClick={this.reset}>Reset</button>
+			</section>
+		</div>
+	);
+};
+
+export default Counter;
+```
