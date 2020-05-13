@@ -1,4 +1,4 @@
-# PureReactState (In Development)
+# PureReactState E-Learing Reference (In Development)
 
 Delving into Class Based State, Hooks State, Reducers, Context, Data Fetching and Thunks.
 
